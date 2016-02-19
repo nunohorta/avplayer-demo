@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AVPlayerDemo", "AVPlayerDemo\AVPlayerDemo.csproj", "{7474BD73-025A-45FC-B6F6-9F0186512A95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7474BD73-025A-45FC-B6F6-9F0186512A95}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{7474BD73-025A-45FC-B6F6-9F0186512A95}.Debug|iPhone.Build.0 = Debug|iPhone
+		{7474BD73-025A-45FC-B6F6-9F0186512A95}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{7474BD73-025A-45FC-B6F6-9F0186512A95}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{7474BD73-025A-45FC-B6F6-9F0186512A95}.Release|iPhone.ActiveCfg = Release|iPhone
+		{7474BD73-025A-45FC-B6F6-9F0186512A95}.Release|iPhone.Build.0 = Release|iPhone
+		{7474BD73-025A-45FC-B6F6-9F0186512A95}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{7474BD73-025A-45FC-B6F6-9F0186512A95}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+EndGlobal
