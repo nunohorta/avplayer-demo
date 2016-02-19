@@ -44,6 +44,15 @@ namespace AVPlayerDemo
 			LoadNotifications ();
 		}
 
+		public override void ViewDidLayoutSubviews ()
+		{
+			base.ViewDidLayoutSubviews ();
+			PlayerView.BackgroundColor = UIColor.Black;
+
+			if (_playerLayer != null)
+				_playerLayer.Frame = PlayerView.Bounds;
+		}
+
 		partial void PlayLive (NSObject sender)
 		{
 			_liveStream = true;
@@ -105,7 +114,7 @@ namespace AVPlayerDemo
 
 			_player = new AVPlayer (_playerItem);
 			_playerLayer = AVPlayerLayer.FromPlayer (_player);
-			_playerLayer.Frame = View.Frame;
+			_playerLayer.Frame = PlayerView.Bounds;
 			_playerLayer.VideoGravity = AVLayerVideoGravity.ResizeAspect;
 
 			PlayerView.Layer.AddSublayer (_playerLayer);
