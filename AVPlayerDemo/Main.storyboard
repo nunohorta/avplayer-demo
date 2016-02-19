@@ -18,10 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g6r-Vc-jX4">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwr-H8-6xY">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
@@ -46,6 +42,38 @@
                                     <constraint firstItem="X0f-4W-1RG" firstAttribute="centerX" secondItem="cwr-H8-6xY" secondAttribute="centerX" id="ifZ-P2-68l"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g6r-Vc-jX4">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jZb-JI-ZUE">
+                                        <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tUK-tu-1OZ">
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="50"/>
+                                                <state key="normal" title="Play">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="TogglePlayPause:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Hj-g1-oSq"/>
+                                                </connections>
+                                            </button>
+                                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PpR-nc-GNe">
+                                                <rect key="frame" x="123" y="8" width="354" height="31"/>
+                                            </slider>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.60202047413793103" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="fdl-hq-bKy"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="jZb-JI-ZUE" secondAttribute="bottom" id="5d0-7q-6Fe"/>
+                                    <constraint firstAttribute="trailing" secondItem="jZb-JI-ZUE" secondAttribute="trailing" id="6dQ-w2-yTp"/>
+                                    <constraint firstItem="jZb-JI-ZUE" firstAttribute="leading" secondItem="g6r-Vc-jX4" secondAttribute="leading" id="i6j-Qr-Xai"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -60,13 +88,16 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="ControlsView" destination="jZb-JI-ZUE" id="9jv-R1-X5L"/>
                         <outlet property="OptionsView" destination="cwr-H8-6xY" id="LSJ-X6-B2M"/>
+                        <outlet property="PlayPauseButton" destination="tUK-tu-1OZ" id="ZFZ-iC-1bg"/>
                         <outlet property="PlayerView" destination="g6r-Vc-jX4" id="9P4-gG-6MQ"/>
+                        <outlet property="Scrubber" destination="PpR-nc-GNe" id="fgg-Kl-g1C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="260" y="429"/>
+            <point key="canvasLocation" x="4" y="432"/>
         </scene>
     </scenes>
 </document>

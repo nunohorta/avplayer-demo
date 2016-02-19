@@ -21,6 +21,8 @@ namespace AVPlayerDemo
 		static NSString PlaybackBufferFullContext = new NSString("PlaybackBufferFullContext");
 		static NSString PlaybackLikelyToKeepUpContext = new NSString("PlaybackLikelyToKeepUpContext");
 
+		protected float RestoreAfterScrubbingRate, ScrubbingSpeed;
+
 		AVPlayer _player;
 		AVPlayerLayer _playerLayer;
 		AVAsset _asset;
@@ -29,6 +31,7 @@ namespace AVPlayerDemo
 
 		/* Source -> http://stackoverflow.com/questions/10104301/hls-streaming-video-url-need-for-testing */
 		string _url = "http://vevoplaylist-live.hls.adaptive.level3.net/vevo/ch1/appleman.m3u8";
+		string _localFile = "trailer_1080p.mov";
 
 		public ViewController (IntPtr handle) : base (handle)
 		{
@@ -53,6 +56,17 @@ namespace AVPlayerDemo
 			InitialisePlayer ();
 		}
 
+		partial void TogglePlayPause (NSObject sender)
+		{
+			if(IsPlaying()){
+				_player.Pause ();
+				ShowPlayButton();
+			}else{
+				_player.Play ();
+				ShowPauseButton();
+			}
+		}
+		 
 		void InitialisePlayer()
 		{
 			CreateAVAsset ();
@@ -67,12 +81,28 @@ namespace AVPlayerDemo
 
 		void CreateAVAsset()
 		{
-			_asset = AVAsset.FromUrl (NSUrl.FromString(_url));
+			if (_liveStream) {
+				_asset = AVAsset.FromUrl (NSUrl.FromString(_url));
+			} else {
+				_asset = AVAsset.FromUrl (NSUrl.FromFilename (_localFile));
+			}
+
 			_playerItem = new AVPlayerItem (_asset);
+		}
+
+		void SetupControls()
+		{
+			if (_liveStream) {
+				Scrubber.Hidden = true;
+			} else {
+				Scrubber.Hidden = false;
+			}
 		}
 
 		void CreateAVPlayer()
 		{
+			SetupControls ();
+
 			_player = new AVPlayer (_playerItem);
 			_playerLayer = AVPlayerLayer.FromPlayer (_player);
 			_playerLayer.Frame = View.Frame;
@@ -94,6 +124,35 @@ namespace AVPlayerDemo
 		{
 			_player.Muted = true;
 			_player.Play ();
+
+			SyncPlayPauseButtons ();
+		}
+
+		void SyncPlayPauseButtons()
+		{
+			if (IsPlaying ()) {
+				ShowPauseButton ();
+			} else {
+				ShowPlayButton ();
+			}
+		}
+
+		void ShowPlayButton()
+		{
+			PlayPauseButton.SetTitle ("Play", UIControlState.Normal);
+		}
+
+		void ShowPauseButton()
+		{
+			PlayPauseButton.SetTitle ("Pause", UIControlState.Normal);
+		}
+
+		bool IsPlaying()
+		{
+			if (_player == null)
+				return false;
+
+			return RestoreAfterScrubbingRate != 0f || _player.Rate != 0f;
 		}
 
 		void AVPlayerItemPlaybackStalled(NSNotification notification)
