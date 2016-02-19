@@ -25,24 +25,36 @@ namespace AVPlayerDemo
 		AVPlayerLayer _playerLayer;
 		AVAsset _asset;
 		AVPlayerItem _playerItem;
-		UIView _playerView;
+		bool _liveStream;
 
 		/* Source -> http://stackoverflow.com/questions/10104301/hls-streaming-video-url-need-for-testing */
 		string _url = "http://vevoplaylist-live.hls.adaptive.level3.net/vevo/ch1/appleman.m3u8";
 
 		public ViewController (IntPtr handle) : base (handle)
 		{
-			View.AutosizesSubviews = true;
-			View.TranslatesAutoresizingMaskIntoConstraints = true;
 			View.BackgroundColor = UIColor.Gray;
 		}
 
 		public override void ViewDidLoad ()
 		{
 			base.ViewDidLoad ();
-
 			LoadNotifications ();
+		}
 
+		partial void PlayLive (NSObject sender)
+		{
+			_liveStream = true;
+			InitialisePlayer ();
+		}
+
+		partial void PlayLocal (NSObject sender)
+		{
+			_liveStream = false;
+			InitialisePlayer ();
+		}
+
+		void InitialisePlayer()
+		{
 			CreateAVAsset ();
 			CreateAVPlayer ();
 		}
@@ -61,17 +73,19 @@ namespace AVPlayerDemo
 
 		void CreateAVPlayer()
 		{
-			_playerView = new UIView (View.Frame);
-			_playerView.TranslatesAutoresizingMaskIntoConstraints = true;
-
 			_player = new AVPlayer (_playerItem);
 			_playerLayer = AVPlayerLayer.FromPlayer (_player);
 			_playerLayer.Frame = View.Frame;
 			_playerLayer.VideoGravity = AVLayerVideoGravity.ResizeAspect;
 
-			_playerView.Layer.AddSublayer (_playerLayer);
+			PlayerView.Layer.AddSublayer (_playerLayer);
 
-			View.Add (_playerView);
+			UIView.Animate (0.3, () => {
+				OptionsView.Alpha = 0f;
+			}, () =>{
+				OptionsView.Hidden = true;
+				PlayerView.Hidden = false;
+			});
 
 			Play ();
 		}
