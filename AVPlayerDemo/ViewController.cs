@@ -41,8 +41,16 @@ namespace AVPlayerDemo
 		{
 			base.ViewDidLoad ();
 
+			LoadNotifications ();
+
 			CreateAVAsset ();
 			CreateAVPlayer ();
+		}
+
+		public override void ViewWillDisappear (bool animated)
+		{
+			base.ViewWillDisappear (animated);
+			UnloadNotifications ();
 		}
 
 		void CreateAVAsset()
@@ -72,6 +80,85 @@ namespace AVPlayerDemo
 		{
 			_player.Muted = true;
 			_player.Play ();
+		}
+
+		void AVPlayerItemPlaybackStalled(NSNotification notification)
+		{
+			Console.WriteLine ("AVPlayerItemPlaybackStalled!");
+		}
+
+		void AVPlayerItemNewErrorLogEntry(NSNotification notification)
+		{
+			Console.WriteLine ("AVPlayerItemNewErrorLogEntry");
+		}
+
+		void AVPlayerItemNewAccessLogEntry(NSNotification notification)
+		{
+			Console.WriteLine ("AVPlayerItemNewAccessLogEntry");
+		}
+
+		void AVPlayerPlaybackError(NSNotification notification)
+		{
+			Console.WriteLine ("PlayerPlaybackError");
+		}
+
+		void AVPlayerPlaybackDidFinish(NSNotification notification)
+		{
+			Console.WriteLine ("AVPlayerPlaybackDidFinish");
+		}
+
+		void AppDidEnterBackground(NSNotification notification)
+		{
+			Console.WriteLine ("AppDidEnterBackground");
+		}
+
+		void AppDidBecomeActive(NSNotification notification)
+		{
+			Console.WriteLine ("AppDidBecomeActive");
+		}
+
+		void OrientationDidChange(NSNotification notification)
+		{
+			Console.WriteLine ("OrientationDidChange");
+		}
+
+		void LoadNotifications()
+		{
+			_aVPlayerItemFailedToPlayToEndTimeNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ((NSString)"AVPlayerItemFailedToPlayToEndTimeNotification", AVPlayerPlaybackError);
+			_aVPlayerItemDidPlayToEndTimeNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ((NSString)"AVPlayerItemDidPlayToEndTimeNotification", AVPlayerPlaybackDidFinish);
+			_aVPlayerItemPlaybackStalledNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ((NSString)"AVPlayerItemPlaybackStalledNotification", AVPlayerItemPlaybackStalled);
+			_aVPlayerItemNewErrorLogEntryNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ((NSString)"AVPlayerItemNewErrorLogEntryNotification", AVPlayerItemNewErrorLogEntry);
+			_aVPlayerItemNewAccessLogEntryNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ((NSString)"AVPlayerItemNewAccessLogEntryNotification", AVPlayerItemNewAccessLogEntry);
+			_UIApplicationDidEnterBackgroundNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ((NSString)"UIApplicationDidEnterBackgroundNotification", AppDidEnterBackground);
+			_UIApplicationDidBecomeActiveNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ((NSString)"UIApplicationDidBecomeActiveNotification", AppDidBecomeActive);
+			_UIDeviceOrientationDidChangeNotificationObserver = NSNotificationCenter.DefaultCenter.AddObserver ((NSString)"UIDeviceOrientationDidChangeNotification", OrientationDidChange);
+		}
+
+		void UnloadNotifications()
+		{
+			if (_aVPlayerItemFailedToPlayToEndTimeNotificationObserver != null)
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_aVPlayerItemFailedToPlayToEndTimeNotificationObserver);
+
+			if (_aVPlayerItemDidPlayToEndTimeNotificationObserver != null)
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_aVPlayerItemDidPlayToEndTimeNotificationObserver);
+
+			if (_aVPlayerItemPlaybackStalledNotificationObserver != null)
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_aVPlayerItemPlaybackStalledNotificationObserver);
+
+			if (_aVPlayerItemNewErrorLogEntryNotificationObserver != null)
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_aVPlayerItemNewErrorLogEntryNotificationObserver);
+
+			if (_aVPlayerItemNewAccessLogEntryNotificationObserver != null)
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_aVPlayerItemNewAccessLogEntryNotificationObserver);
+
+			if (_UIApplicationDidEnterBackgroundNotificationObserver != null)
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_UIApplicationDidEnterBackgroundNotificationObserver);
+
+			if (_UIApplicationDidBecomeActiveNotificationObserver != null)
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_UIApplicationDidBecomeActiveNotificationObserver);
+
+			if (_UIDeviceOrientationDidChangeNotificationObserver != null)
+				NSNotificationCenter.DefaultCenter.RemoveObserver(_UIDeviceOrientationDidChangeNotificationObserver);
 		}
 
 		public override void DidReceiveMemoryWarning ()
