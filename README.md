@@ -1,6 +1,6 @@
 # AVPlayer Demo
 
-Just a simple project to implement AVPlayer API with Xamarin
+Just a simple project using the AVPlayer API with custom controls in Xamarin.
 
 Observers:
  - AVPlayerItemFailedToPlayToEndTimeNotification
