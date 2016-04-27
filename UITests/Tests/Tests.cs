@@ -2,9 +2,9 @@
 
 namespace UITests
 {
-	public class Tests
+	public class CommonTests
 	{
-		public Tests ()
+		public CommonTests ()
 		{
 		}
 	}
